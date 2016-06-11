@@ -1,4 +1,4 @@
-package com.example.ccparram.androidchat;
+package com.example.ccparram.androidchat.login;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+
+import com.example.ccparram.androidchat.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,4 +1,4 @@
-package com.example.ccparram.androidchat;
+package com.example.ccparram.androidchat.domain;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
