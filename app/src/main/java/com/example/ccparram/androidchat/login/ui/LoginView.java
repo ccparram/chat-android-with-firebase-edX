@@ -1,4 +1,4 @@
-package com.example.ccparram.androidchat.login;
+package com.example.ccparram.androidchat.login.ui;
 
 public interface LoginView {
     void enabledInputs();

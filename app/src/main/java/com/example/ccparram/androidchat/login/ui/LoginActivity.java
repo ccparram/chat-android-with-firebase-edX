@@ -1,4 +1,4 @@
-package com.example.ccparram.androidchat.login;
+package com.example.ccparram.androidchat.login.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import android.widget.RelativeLayout;
 
 import com.example.ccparram.androidchat.R;
 import com.example.ccparram.androidchat.contacList.ContacListActivity;
+import com.example.ccparram.androidchat.login.LoginPresenter;
+import com.example.ccparram.androidchat.login.LoginPresenterImpl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

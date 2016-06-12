@@ -3,6 +3,7 @@ package com.example.ccparram.androidchat.login;
 import com.example.ccparram.androidchat.lib.EventBus;
 import com.example.ccparram.androidchat.lib.GreenRobotEventBus;
 import com.example.ccparram.androidchat.login.event.LoginEvent;
+import com.example.ccparram.androidchat.login.ui.LoginView;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -103,6 +104,7 @@ public class LoginPresenterImpl implements LoginPresenter {
             loginView.enabledInputs();
             loginView.loginError(error);
         }
+
     }
 
     private void onSignUpError(String error){
