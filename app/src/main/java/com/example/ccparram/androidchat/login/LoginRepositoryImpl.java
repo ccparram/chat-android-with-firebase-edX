@@ -47,26 +47,7 @@ public class LoginRepositoryImpl implements LoginRepository{
         dataReference.authWithPassword(email, password, new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
-                myUserReference = helper.getMyUserReference();
-                myUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        User currentUser = dataSnapshot.getValue(User.class);
-
-                        if(currentUser == null){
-                            String email = helper.getAuthUserEmail();
-                            if (email != null){
-                                currentUser = new User();
-                                myUserReference.setValue(currentUser);
-                            }
-                        }
-                        helper.changeUserConnectionStatus(User.ONLINE);
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {}
-                });
-                postEvent(LoginEvent.ON_SIGN_IN_SUCCESS);
+                initSignIn();
             }
 
             @Override
@@ -78,7 +59,39 @@ public class LoginRepositoryImpl implements LoginRepository{
 
     @Override
     public void checkSession() {
-        postEvent(LoginEvent.ON_FAILED_TO_RECOVER_SESSION);
+        if(dataReference.getAuth() != null){
+            initSignIn();
+        } else{
+            postEvent(LoginEvent.ON_FAILED_TO_RECOVER_SESSION);
+        }
+    }
+
+    private void initSignIn() {
+        myUserReference = helper.getMyUserReference();
+        myUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User currentUser = dataSnapshot.getValue(User.class);
+
+                if(currentUser == null){
+                    registerNewUser();
+                }
+                helper.changeUserConnectionStatus(User.ONLINE);
+                postEvent(LoginEvent.ON_SIGN_IN_SUCCESS);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {}
+        });
+    }
+
+    private void registerNewUser() {
+        String email = helper.getAuthUserEmail();
+        if (email != null){
+            User currentUser = new User();
+            currentUser.setEmail(email);
+            myUserReference.setValue(currentUser);
+        }
     }
 
     private void postEvent(int type, String errorMessage){

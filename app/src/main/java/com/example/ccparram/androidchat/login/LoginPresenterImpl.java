@@ -1,7 +1,5 @@
 package com.example.ccparram.androidchat.login;
 
-import android.util.Log;
-
 import com.example.ccparram.androidchat.lib.EventBus;
 import com.example.ccparram.androidchat.lib.GreenRobotEventBus;
 import com.example.ccparram.androidchat.login.event.LoginEvent;
@@ -120,6 +118,5 @@ public class LoginPresenterImpl implements LoginPresenter {
             loginView.hideProgessBar();
             loginView.enabledInputs();
         }
-        Log.e(this.getClass().getName(), "onFailedToRecoverSession");
     }
 }
