@@ -1,18 +1,32 @@
 package com.example.ccparram.androidchat.login;
 
+import android.util.Log;
+
+import com.example.ccparram.androidchat.lib.EventBus;
+import com.example.ccparram.androidchat.lib.GreenRobotEventBus;
+import com.example.ccparram.androidchat.login.event.LoginEvent;
+
 public class LoginPresenterImpl implements LoginPresenter {
 
+    private EventBus eventBus;
     private LoginView loginView;
     private LoginInteractor loginInteractor;
 
     public LoginPresenterImpl(LoginView loginView) {
         this.loginView = loginView;
         this.loginInteractor = new LoginInteractorImpl();
+        this.eventBus = GreenRobotEventBus.getInstance();
+    }
+
+    @Override
+    public void onCreate() {
+        eventBus.register(this);
     }
 
     @Override
     public void onDestroy() {
         loginView = null;
+        eventBus.unregister(this);
     }
 
     @Override
@@ -45,6 +59,31 @@ public class LoginPresenterImpl implements LoginPresenter {
         loginInteractor.doSignUp(email, password);
     }
 
+    @Override
+    public void onEventMainThread(LoginEvent loginEvent) {
+        switch (loginEvent.getEventType()){
+            case LoginEvent.ON_SIGN_IN_SUCCESS:
+                onSignInSuccess();
+                break;
+
+            case LoginEvent.ON_SIGN_UP_SUCCESS:
+                onSignUpSuccess();
+                break;
+
+            case LoginEvent.ON_SIGN_IN_ERROR:
+                onSignInError(loginEvent.getErrorMessage());
+            break;
+
+            case LoginEvent.ON_SIGN_UP_ERROR:
+                onSignUpError(loginEvent.getErrorMessage());
+                break;
+
+            case LoginEvent.ON_FAILED_TO_RECOVER_SESSION:
+                onFailedToRecoverSession();
+                break;
+        }
+    }
+
     private void onSignInSuccess(){
         if(loginView != null){
             loginView.navigateToMainScreen();
@@ -65,11 +104,19 @@ public class LoginPresenterImpl implements LoginPresenter {
         }
     }
 
-    private void onSignInErro(String error){
+    private void onSignUpError(String error){
         if(loginView != null){
             loginView.hideProgessBar();
             loginView.enabledInputs();
             loginView.newUserError(error);
         }
+    }
+
+    private void onFailedToRecoverSession() {
+        if(loginView != null){
+            loginView.hideProgessBar();
+            loginView.enabledInputs();
+        }
+        Log.e(this.getClass().getName(), "onFailedToRecoverSession");
     }
 }
