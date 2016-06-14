@@ -1,4 +1,4 @@
-package com.example.ccparram.androidchat.contacList;
+package com.example.ccparram.androidchat.contacList.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
