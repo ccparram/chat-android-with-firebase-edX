@@ -9,4 +9,8 @@
     <string name="login_error_message_signin">Imposible iniciar sesión %s</string>
     <string name="login_error_message_signup">Imposible registrar nuevo usuario %s</string>
     <string name="login_notice_message_signup">Usuario agregado exitosamente</string>
+
+
+    <string name="contactlist_menu_action_signoff">Cerrar sesión</string>
+    <string name="contactlist_title">Contactos</string>
 </resources>
